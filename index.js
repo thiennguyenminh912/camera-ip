@@ -1,0 +1,41 @@
+const express = require("express");
+const request = require("request");
+const app = express();
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
+app.get("/video", (req, res) => {
+  request
+    .get({
+      url: "http://192.168.1.22:3333/cgi-bin/mjpg/video.cgi?subtype=1",
+      auth: {
+        user: "admin",
+        pass: "P@ssword321",
+        sendImmediately: false,
+        auth: {
+          qop: "auth",
+          algorithm: "md5",
+          realm: "video stream server",
+          nonce: "unique-nonce-value",
+        },
+      },
+    })
+    .on("response", function (response) {
+      res.set(
+        "Content-Type",
+        "multipart/x-mixed-replace; boundary=--myboundary"
+      );
+      response.pipe(res);
+    });
+});
+
+app.listen(3001, () => {
+  console.log("Server running on port 3001");
+});
