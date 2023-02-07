@@ -11,6 +11,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get("/vercel", (req, res) => {
+  res.send("Express on Vercel");
+});
+
 app.get("/video", (req, res) => {
   request
     .get({
@@ -39,3 +43,5 @@ app.get("/video", (req, res) => {
 app.listen(process.env.PORT || 3001, () => {
   console.log(`Server running on port ${process.env.PORT || 3001}`);
 });
+
+module.exports = app;
