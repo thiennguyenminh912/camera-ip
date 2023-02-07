@@ -18,7 +18,7 @@ app.get("/vercel", (req, res) => {
 app.get("/video", (req, res) => {
   request
     .get({
-      url: "http://192.168.1.22:3333/cgi-bin/mjpg/video.cgi?subtype=1",
+      url: "http://tiki-camera-ip.kbvision.tv:3333/cgi-bin/mjpg/video.cgi?subtype=1",
       timeout: 100000000,
       auth: {
         user: "admin",
